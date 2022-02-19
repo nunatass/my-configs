@@ -2,7 +2,7 @@
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/nunatass/.oh-my-zsh"
+export ZSH="$HOME.oh-my-zsh"
 
 
 # If you come from bash you might have to change your $PATH.
@@ -121,16 +121,18 @@ export NVM_DIR="$HOME/.nvm"
 
 
 ### Added by Zplugin's installer
-source '/Users/nunatass/.zinit/bin/zplugin.zsh'
-autoload -Uz _zplugin
-(( ${+_comps} )) && _comps[zplugin]=_zplugin
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+source "${ZINIT_HOME}/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 ### End of Zplugin's installer chunk
 
-zplugin light zdharma/fast-syntax-highlighting
-zplugin light zsh-users/zsh-autosuggestions
-zplugin light zsh-users/zsh-history-substring-search
-zplugin light zsh-users/zsh-completions
-zplugin light buonomo/yarn-completion
+zinit light zdharma-continuum/fast-syntax-highlighting
+zinit light zsh-users/zsh-autosuggestion
+zinit load  zdharma-continuum/history-search-multi-word
+zinit light zsh-users/zsh-history-substring-search
+zinit light zsh-users/zsh-completions
+zinit light buonomo/yarn-completion
 
 pasteinit() {
   OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
@@ -170,4 +172,13 @@ if [[ "$TERM_PROGRAM" == "Hyper" ]]; then
   SPACESHIP_GIT_BRANCH_SHOW=true
   unsetopt PROMPT_SP
 fi
+### End of Zinit's installer chunk
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
+
 ### End of Zinit's installer chunk
